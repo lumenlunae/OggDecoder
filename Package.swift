@@ -8,24 +8,32 @@ let package = Package(
     products: [
         .library(
             name: "OggDecoder",
-            targets: ["OggDecoder"]),
+            targets: ["OggDecoder"])
     ],
-    dependencies: [
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "OggDecoder",
             dependencies: ["ogg", "vorbis"],
-            path: "Sources/OggDecoderObjC"),
+            path: "Sources/OggDecoderObjC",
+            publicHeadersPath: "include",
+            cxxSettings: [
+                .headerSearchPath("include")
+            ],
+            linkerSettings: [
+                .linkedFramework("Foundation")
+            ]),
         .testTarget(
             name: "OggDecoderTests",
             dependencies: ["OggDecoder"],
             resources: [
                 .copy("TestResources/")
             ]),
-        .binaryTarget(name: "ogg",
-                      path: "ogg.xcframework"),
-        .binaryTarget(name: "vorbis",
-                      path: "vorbis.xcframework"),
+        .binaryTarget(
+            name: "ogg",
+            path: "ogg.xcframework"),
+        .binaryTarget(
+            name: "vorbis",
+            path: "vorbis.xcframework"),
     ]
 )
